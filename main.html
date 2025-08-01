@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HEBS HQ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase.js"></script>
+</head>
+<body>
+  <div class="top-bar">
+    <h2>HEBS Command</h2>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="main">
+    <h3 id="greet">Loading...</h3>
+
+    <h4>Mission Log:</h4>
+    <div id="log-box"></div>
+    <textarea id="log" placeholder="Write a mission..."></textarea>
+    <button onclick="postLog()">Post</button>
+
+    <h4>Chat:</h4>
+    <div id="chat-box"></div>
+    <input id="chat" placeholder="Send message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const user = localStorage.getItem("hebsUser");
+    if (!user) window.location.href = "index.html";
+    document.getElementById("greet").innerText = `Welcome, ${user}!`;
+
+    const db = firebase.database();
+
+    function sendMessage() {
+      const msg = document.getElementById("chat").value;
+      db.ref("chat").push(`${user}: ${msg}`);
+      document.getElementById("chat").value = "";
+    }
+
+    function postLog() {
+      const log = document.getElementById("log").value;
+      db.ref("log").push(`${user}: ${log}`);
+      document.getElementById("log").value = "";
+    }
+
+    db.ref("chat").on("child_added", snap => {
+      const chat = document.getElementById("chat-box");
+      chat.innerHTML += snap.val() + "<br>";
+    });
+
+    db.ref("log").on("child_added", snap => {
+      const log = document.getElementById("log-box");
+      log.innerHTML += snap.val() + "<br>";
+    });
+
+    function logout() {
+      localStorage.removeItem("hebsUser");
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+  background: #121212;
+  color: white;
+  font-family: monospace;
+  padding: 20px;
+}
+input, textarea {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+  width: 300px;
+  background: #222;
+  color: white;
+  border: 1px solid #555;
+}
+button {
+  background: #333;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+}
+.login-box {
+  margin: 100px auto;
+  text-align: center;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#chat-box, #log-box {
+  background: #1e1e1e;
+  padding: 10px;
+  height: 100px;
+  overflow-y: auto;
+  border: 1px solid #444;
+}
