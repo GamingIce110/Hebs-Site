@@ -1,37 +1,14 @@
-body {
-  background: #121212;
-  color: white;
-  font-family: monospace;
-  padding: 20px;
-}
-input, textarea {
-  display: block;
-  margin: 10px 0;
-  padding: 8px;
-  width: 300px;
-  background: #222;
-  color: white;
-  border: 1px solid #555;
-}
-button {
-  background: #333;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-}
-.login-box {
-  margin: 100px auto;
-  text-align: center;
-}
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#chat-box, #log-box {
-  background: #1e1e1e;
-  padding: 10px;
-  height: 100px;
-  overflow-y: auto;
-  border: 1px solid #444;
-}
+/* style.css */ body { margin: 0; padding: 0; font-family: monospace; background: black; color: #00ffcc; display: flex; justify-content: center; align-items: center; height: 100vh; }
+
+.login-container { text-align: center; background: rgba(0, 0, 0, 0.7); padding: 30px; border: 2px solid #00ffcc; border-radius: 12px; box-shadow: 0 0 20px #00ffcc; width: 300px; }
+
+h1.glitch { font-size: 28px; position: relative; animation: glitch 1s infinite; }
+
+@keyframes glitch { 0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(2px, -2px); } 60% { transform: translate(-1px, 1px); } 80% { transform: translate(1px, -1px); } 100% { transform: translate(0); } }
+
+input[type="password"] { padding: 10px; margin-top: 15px; width: 80%; background: black; color: #00ffcc; border: 1px solid #00ffcc; border-radius: 6px; }
+
+button { margin-top: 15px; padding: 10px 20px; background: #00ffcc; color: black; border: none; border-radius: 6px; cursor: pointer; }
+
+button:hover { background: #00ffaa; }
+
