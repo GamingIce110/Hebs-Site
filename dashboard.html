@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HEBS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="login-container">
+    <h1 class="glitch">HEBS DASHBOARD</h1>
+    <p id="memberName"></p>
+    <p id="memberRole"></p>
+    <div id="missionBoard">
+      <h3>🔐 Secret Missions</h3>
+      <ul id="missions"></ul>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script>
+    const roles = {
+      "Shayan": "Leader / Copy Holder",
+      "Qaim": "Hacker / Editor",
+      "Hasan": "Mission Executer / Faltu Banda",
+      "Hadi": "Fighter",
+      "Ayan": "Secret Member / Spy"
+    };const missions = {
+  "Shayan": ["Control class chaos", "Hold backup copy of HEBS docs"],
+  "Qaim": ["Manage tech stuff", "Edit secret files"],
+  "Hasan": ["Carry out basic missions", "Distract teachers if needed"],
+  "Hadi": ["Protect members", "Act strong in fights"],
+  "Ayan": ["Gather info secretly", "Stay hidden"]
+};
+
+const user = localStorage.getItem("hebsMember");
+if (!user) {
+  window.location.href = "index.html";
+} else {
+  document.getElementById("memberName").innerText = `👤 Name: ${user}`;
+  document.getElementById("memberRole").innerText = `🛠️ Role: ${roles[user]}`;
+
+  const missionList = document.getElementById("missions");
+  missions[user].forEach(m => {
+    const li = document.createElement("li");
+    li.innerText = m;
+    missionList.appendChild(li);
+  });
+}
+
+function logout() {
+  localStorage.removeItem("hebsMember");
+  window.location.href = "index.html";
+}
+
+  </script>
+</body>
+</html>
