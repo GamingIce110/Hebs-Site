@@ -1,7 +1,4 @@
-<!-- Full HEBS Website: Phase 1 Setup -->
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
+<!-- index.html --><!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,37 +12,23 @@
     <input type="password" id="passwordInput" placeholder="Enter Password" />
     <button onclick="login()">Enter</button>
   </div>
-
-  <audio id="startupSound" src="sounds/startup.mp3" autoplay></audio>
-
-  <script src="firebase.js"></script>
-
-  <!-- Inline login logic -->
   <script>
-    const members = {
-      "Leader541": "dashboard.html?user=Shayan",
-      "Hacker427": "dashboard.html?user=Qaim",
-      "exe829": "dashboard.html?user=Hasan",
-      "fighter,7648": "dashboard.html?user=Hadi",
-      "spy784": "dashboard.html?user=Ayan"
-    };
-
     function login() {
-      const password = document.getElementById("passwordInput").value.trim();
-      if (members[password]) {
-        window.location.href = members[password];
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Wrong Password',
-          text: 'Access Denied!',
-          background: '#111',
-          color: '#fff'
-        });
-      }
-    }
-  </script>
+      const password = document.getElementById("passwordInput").value;
+      const users = {
+        "Leader541": "Shayan",
+        "Hacker427": "Qaim",
+        "exe829": "Hasan",
+        "fighter,7648": "Hadi",
+        "spy784": "Ayan"
+      };if (users[password]) {
+    localStorage.setItem("hebs_user", users[password]);
+    window.location.href = "dashboard.html";
+  } else {
+    Swal.fire("Access Denied", "Wrong password!", "error");
+  }
+}
 
-  <script src="script.js"></script>
+  </script>
 </body>
 </html>
