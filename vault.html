@@ -1,86 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEBS Vault</title>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDc4txFkjXsN6ds8bZannRwECTR1T-Y1Z4",
-      authDomain: "hebs-3daa8.firebaseapp.com",
-      databaseURL: "https://hebs-3daa8-default-rtdb.firebaseio.com",
-      projectId: "hebs-3daa8",
-      storageBucket: "hebs-3daa8.appspot.com",
-      messagingSenderId: "401317379209",
-      appId: "1:401317379209:web:48ff3bad41915e499e1a58"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const storage = getStorage();
-
-    onAuthStateChanged(auth, user => {
-      if (!user) {
-        alert("Not logged in");
-        window.location.href = "index.html";
-      } else {
-        const uid = user.uid;
-
-        // Upload handler
-        document.getElementById('uploadBtn').onclick = async () => {
-          const file = document.getElementById('fileInput').files[0];
-          if (!file) return alert("Choose a file");
-
-          const fileRef = ref(storage, `vault/${uid}/${file.name}`);
-          await uploadBytes(fileRef, file);
-          alert("Uploaded!");
-
-          loadFiles();
-        };
-
-        // Load file list
-        async function loadFiles() {
-          const listRef = ref(storage, `vault/${uid}`);
-          const result = await listAll(listRef);
-          const linksDiv = document.getElementById('files');
-          linksDiv.innerHTML = '';
-
-          for (const item of result.items) {
-            const url = await getDownloadURL(item);
-            const a = document.createElement('a');
-            a.href = url;
-            a.textContent = item.name;
-            a.target = "_blank";
-            linksDiv.appendChild(a);
-            linksDiv.appendChild(document.createElement("br"));
-          }
-        }
-
-        loadFiles();
-      }
-    });
-
-    function logout() {
-      signOut(auth).then(() => {
-        window.location.href = "index.html";
-      });
-    }
-  </script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="background-color:black; color:lime; font-family:monospace;">
+<body>
   <script>
-    if (!localStorage.getItem("hebs_user")) {
+    const user = localStorage.getItem("hebs_user");
+    if (!user) {
       alert("You are not logged in. Redirecting...");
       window.location.href = "index.html";
-  }
+    }
   </script>
-  <h2>📂 HEBS File Vault</h2>
+
+  <h1>Vault Upload</h1>
+  <p>Logged in as: <strong><span id="vaultUser"></span></strong></p>
+
   <input type="file" id="fileInput">
-  <button id="uploadBtn">Upload</button>
-  <button onclick="logout()">Logout</button>
-  <hr>
-  <div id="files"></div>
+  <button onclick="uploadFile()">Upload File</button>
+
+  <ul id="fileList"></ul>
+
+  <script src="firebase.js"></script>
+  <script>
+    document.getElementById("vaultUser").textContent = user;
+
+    function uploadFile() {
+      const file = document.getElementById("fileInput").files[0];
+      if (!file) return;
+
+      const storageRef = firebase.storage().ref(`vault/${user}/${file.name}`);
+      storageRef.put(file).then(() => alert("Upload done"));
+    }
+
+    const listRef = firebase.storage().ref(`vault/${user}`);
+    listRef.listAll().then(res => {
+      const list = document.getElementById("fileList");
+      res.items.forEach(item => {
+        item.getDownloadURL().then(url => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="${url}" target="_blank">${item.name}</a>`;
+          list.appendChild(li);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
