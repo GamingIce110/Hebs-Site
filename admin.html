@@ -1,0 +1,93 @@
+<!-- admin.html --><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HEBS Admin Console</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #111;
+      color: #0f0;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    .console-box {
+      border: 1px solid #0f0;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    input {
+      background: black;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 5px;
+    }
+    button {
+      background: black;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔒 HEBS Admin Console</h1>  <div id="login">
+    <p>Enter master password:</p>
+    <input type="password" id="adminPass" placeholder="********">
+    <button onclick="checkPass()">Access</button>
+    <p id="error" style="color: red;"></p>
+  </div>  <div id="console" class="hidden">
+    <div class="console-box">
+      <h2>👤 Member Logs</h2>
+      <div id="logs">Loading...</div>
+    </div><div class="console-box">
+  <h2>📁 Uploaded Files</h2>
+  <div id="files">Loading...</div>
+</div>
+
+<div class="console-box">
+  <h2>📜 Missions Summary</h2>
+  <div id="missions">Loading...</div>
+</div>
+
+  </div>  <script>
+    const masterPassword = "QaimMasterCode";
+
+    function checkPass() {
+      const input = document.getElementById('adminPass').value;
+      if (input === masterPassword) {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('console').classList.remove('hidden');
+        loadAdminData();
+      } else {
+        document.getElementById('error').textContent = "Wrong password!";
+      }
+    }
+
+    function loadAdminData() {
+      // Fake examples until we link Firebase here
+      document.getElementById('logs').innerHTML = `
+        <ul>
+          <li>Shayan logged in 2 mins ago</li>
+          <li>Hadi uploaded file</li>
+          <li>Hasan failed mission 🤦‍♂️</li>
+        </ul>`;
+
+      document.getElementById('files').innerHTML = `
+        <ul>
+          <li>Hadi_file1.png</li>
+          <li>Ayan_note.pdf</li>
+        </ul>`;
+
+      document.getElementById('missions').innerHTML = `
+        <ul>
+          <li>Mission #1: Completed by Shayan</li>
+          <li>Mission #2: Assigned to Hasan</li>
+          <li>Mission #3: In progress</li>
+        </ul>`;
+    }
+  </script></body>
+</html>
