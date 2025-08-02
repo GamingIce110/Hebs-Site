@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+     if (!localStorage.getItem("hebs_user")) {
+      alert("You are not logged in. Redirecting...");
+      window.location.href = "index.html";
+  }
+   </script>
   <div class="container">
     <h1>📜 Secret Mission Panel</h1>
     <div>
