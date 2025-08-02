@@ -1,31 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>HEBS - Mission Panel</title>
-  <meta charset="UTF-8" />
-  <script type="module" src="mission-script.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEBS Missions</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <script>
-     if (!localStorage.getItem("hebs_user")) {
+    const user = localStorage.getItem("hebs_user");
+    if (!user) {
       alert("You are not logged in. Redirecting...");
       window.location.href = "index.html";
-  }
-   </script>
-  <div class="container">
-    <h1>📜 Secret Mission Panel</h1>
-    <div>
-      <input type="text" id="missionTitle" placeholder="Mission Title" />
-      <br /><br />
-      <textarea id="missionDetails" placeholder="Mission Details"></textarea>
-      <br /><br />
-      <button onclick="uploadMission()">Upload Mission</button>
-      <button onclick="logout()">Logout</button>
-    </div>
+    }
+  </script>
 
-    <h2>📁 Your Missions</h2>
-    <ul id="missionList"></ul>
-  </div>
+  <h1>Mission Upload</h1>
+  <p>Logged in as: <strong><span id="missionUser"></span></strong></p>
+
+  <textarea id="missionInput" placeholder="Enter your mission..."></textarea>
+  <button onclick="uploadMission()">Upload</button>
+
+  <div id="missionLog"></div>
+
+  <script src="firebase.js"></script>
+  <script>
+    document.getElementById("missionUser").textContent = user;
+
+    function uploadMission() {
+      const text = document.getElementById("missionInput").value;
+      if (text.trim()) {
+        const ref = firebase.database().ref("missions/").child(user);
+        ref.push({ mission: text, time: Date.now() });
+        document.getElementById("missionInput").value = "";
+      }
+    }
+
+    firebase.database().ref("missions/" + user).on("value", snapshot => {
+      const data = snapshot.val();
+      const log = document.getElementById("missionLog");
+      log.innerHTML = "";
+      for (let id in data) {
+        const entry = data[id];
+        const div = document.createElement("div");
+        div.textContent = `${new Date(entry.time).toLocaleString()} - ${entry.mission}`;
+        log.appendChild(div);
+      }
+    });
+  </script>
 </body>
 </html>
