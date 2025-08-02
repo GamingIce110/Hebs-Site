@@ -1,44 +1,31 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HEBS Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js"></script>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="dashboard">
-  <div class="nav-bar">
-    <button onclick="showSection('home')">🏠 Home</button>
-    <button onclick="showSection('chat')">💬 Chat</button>
-    <button onclick="showSection('missions')">🎯 Missions</button>
-    <button onclick="showSection('vault')">🔒 Vault</button>
-    <button onclick="showSection('terminal')">💻 Terminal</button>
-  </div>  <div id="home" class="section">
-    <h1>Welcome to HEBS</h1>
-    <p>Top Secret Society Controlled by Shadows.</p>
-  </div>  <div id="chat" class="section" style="display:none">
-    <div id="chatBox"></div>
-    <input type="text" id="chatInput" placeholder="Type a message...">
-    <button onclick="sendMessage()">Send</button>
-  </div>  <div id="missions" class="section" style="display:none">
-    <h2>Upload Mission</h2>
-    <input type="text" id="missionTitle" placeholder="Mission Title">
-    <textarea id="missionDetail" placeholder="Mission Details"></textarea>
-    <button onclick="uploadMission()">Upload</button>
-    <h3>All Missions</h3>
-    <ul id="missionList"></ul>
-  </div>  <div id="vault" class="section" style="display:none">
-    <h2>Encrypted Vault</h2>
-    <input type="file" id="fileInput">
-    <button onclick="uploadFile()">Upload File</button>
-    <div id="fileList"></div>
-  </div>  <div id="terminal" class="section" style="display:none">
-    <h2>HEBS Terminal</h2>
-    <div id="terminalOutput"></div>
-    <input type="text" id="terminalInput" onkeydown="runTerminalCommand(event)" placeholder="Type command...">
-  </div><audio id="startupSound" src="sounds/startup.mp3"></audio>
+<body>
+  <div class="dashboard-container">
+    <h1 class="glitch" data-text="HEBS DASHBOARD">HEBS DASHBOARD</h1>
+    
+    <div class="button-grid">
+      <button onclick="openChat()">🗨️ Chat</button>
+      <button onclick="openMissions()">📌 Missions</button>
+      <button onclick="openVault()">🔐 Vault</button>
+      <button onclick="openTerminal()">💻 Terminal</button>
+    </div>
+    
+    <div class="member-info">
+      <p><strong>Access Level:</strong> Hacker (Qaim)</p>
+      <p><strong>Status:</strong> Connected to HEBS Mainframe</p>
+    </div>
+  </div>
 
-  <script src="firebase.js"></script>  <script src="dashboard.js"></script></body>
+  <audio id="startupSound" src="sounds/startup.mp3" autoplay></audio>
+
+  <script src="dashboard.js"></script>
+</body>
 </html>
