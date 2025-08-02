@@ -1,93 +1,61 @@
-<!-- admin.html --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>HEBS Admin Console</title>
-  <link rel="stylesheet" href="style.css">
   <style>
     body {
-      background-color: #111;
-      color: #0f0;
+      background-color: black;
+      color: #00ff00;
       font-family: monospace;
       padding: 20px;
+    }
+    h1 {
+      color: #00ff00;
+      font-size: 22px;
     }
     .hidden {
       display: none;
     }
-    .console-box {
-      border: 1px solid #0f0;
-      padding: 15px;
+    .section {
       margin-top: 20px;
     }
-    input {
-      background: black;
-      color: #0f0;
-      border: 1px solid #0f0;
+    input, button {
+      font-family: monospace;
+      font-size: 14px;
       padding: 5px;
-    }
-    button {
-      background: black;
-      color: #0f0;
-      border: 1px solid #0f0;
-      padding: 5px 10px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>🔒 HEBS Admin Console</h1>  <div id="login">
-    <p>Enter master password:</p>
-    <input type="password" id="adminPass" placeholder="********">
-    <button onclick="checkPass()">Access</button>
-    <p id="error" style="color: red;"></p>
-  </div>  <div id="console" class="hidden">
-    <div class="console-box">
-      <h2>👤 Member Logs</h2>
-      <div id="logs">Loading...</div>
-    </div><div class="console-box">
-  <h2>📁 Uploaded Files</h2>
-  <div id="files">Loading...</div>
-</div>
-
-<div class="console-box">
-  <h2>📜 Missions Summary</h2>
-  <div id="missions">Loading...</div>
-</div>
-
+  <h1>ADMIN CONSOLE - HEBS</h1>
+  <p>Only for Mastermind. Enter master code to continue.</p>
+  <input type="password" id="masterKey" placeholder="Enter Master Code">
+  <button onclick="unlockAdmin()">Access</button>  <div id="adminPanel" class="hidden">
+    <div class="section">
+      <h2>🧾 Logs</h2>
+      <pre id="logData">Loading...</pre>
+    </div>
+    <div class="section">
+      <h2>📂 Uploaded Files</h2>
+      <pre id="fileData">Loading...</pre>
+    </div>
+    <div class="section">
+      <h2>🎯 Missions</h2>
+      <pre id="missionData">Loading...</pre>
+    </div>
   </div>  <script>
-    const masterPassword = "QaimMasterCode";
-
-    function checkPass() {
-      const input = document.getElementById('adminPass').value;
-      if (input === masterPassword) {
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('console').classList.remove('hidden');
-        loadAdminData();
+    function unlockAdmin() {
+      const key = document.getElementById('masterKey').value;
+      if (key === 'QaimMasterCode') {
+        document.getElementById('adminPanel').classList.remove('hidden');
       } else {
-        document.getElementById('error').textContent = "Wrong password!";
+        alert('Wrong code. Unauthorized access.');
       }
     }
 
-    function loadAdminData() {
-      // Fake examples until we link Firebase here
-      document.getElementById('logs').innerHTML = `
-        <ul>
-          <li>Shayan logged in 2 mins ago</li>
-          <li>Hadi uploaded file</li>
-          <li>Hasan failed mission 🤦‍♂️</li>
-        </ul>`;
-
-      document.getElementById('files').innerHTML = `
-        <ul>
-          <li>Hadi_file1.png</li>
-          <li>Ayan_note.pdf</li>
-        </ul>`;
-
-      document.getElementById('missions').innerHTML = `
-        <ul>
-          <li>Mission #1: Completed by Shayan</li>
-          <li>Mission #2: Assigned to Hasan</li>
-          <li>Mission #3: In progress</li>
-        </ul>`;
-    }
+    // Sample Firebase data display (fake placeholders)
+    document.getElementById('logData').innerText = 'Log 1: Hasan uploaded mission\nLog 2: Shayan edited chat';
+    document.getElementById('fileData').innerText = 'Hadi_upload.pdf\nspy_report_ayan.txt';
+    document.getElementById('missionData').innerText = 'Mission: Track teacher\nStatus: Complete\nBy: Ayan';
   </script></body>
 </html>
