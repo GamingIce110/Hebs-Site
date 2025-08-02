@@ -1,78 +1,19 @@
-<!DOCTYPE html><html lang="en">
+<!-- chat.html (same logic applies for vault.html and missions.html) --><!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEBS Chat</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Firebase SDK scripts -->
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-<!-- Firebase configuration -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDc4txFkjXsN6ds8bZannRwECTR1T-Y1Z4",
-    authDomain: "hebs-3daa8.firebaseapp.com",
-    databaseURL: "https://hebs-3daa8-default-rtdb.firebaseio.com",
-    projectId: "hebs-3daa8",
-    storageBucket: "hebs-3daa8.appspot.com",
-    messagingSenderId: "401317379209",
-    appId: "1:401317379209:web:48ff3bad41915e499e1a58"
-  };
-  firebase.initializeApp(firebaseConfig);
-</script>
-
 </head>
 <body>
   <script>
-    if (!localStorage.getItem("hebs_user")) {
+    const user = localStorage.getItem("hebs_user");
+    if (!user) {
       alert("You are not logged in. Redirecting...");
       window.location.href = "index.html";
-  }
-  </script>
-  <div class="login-container">
-    <h1 class="glitch">HEBS CHAT</h1>
-    <div id="chat-box" class="chat-box"></div>
-    <textarea id="chat-input" placeholder="Type your message..."></textarea>
-    <button onclick="sendMessage()">Send</button>
-    <button onclick="clearChat()">Clear</button>
-    <button onclick="logout()">Logout</button>
-  </div>
-  <script>
-    const chatRef = firebase.database().ref('chat');
-    const chatBox = document.getElementById('chat-box');
-    const chatInput = document.getElementById('chat-input');function sendMessage() {
-  const message = chatInput.value;
-  const user = localStorage.getItem('hebsMember');
-
-  if (message && user) {
-    chatRef.push({ user: user, message: message, timestamp: new Date().toISOString() });
-    chatInput.value = '';
-  } else {
-    Swal.fire({
-      title: 'Error',
-      text: 'Please type a message and make sure you are logged in!'
-    });
-  }
-}
-
-function clearChat() {
-  chatRef.remove();
-}
-
-chatRef.on('child_added', snapshot => {
-  const data = snapshot.val();
-  const messageElement = document.createElement('p');
-  messageElement.innerHTML = `<b>${data.user}</b>: ${data.message} <span class="timestamp">${new Date(data.timestamp).toLocaleString()}</span>`;
-  chatBox.appendChild(messageElement);
-});
-
-function logout() {
-  localStorage.removeItem('hebsMember');
-  window.location.href = 'index.html';
-}
-
-  </script>
-</body>
+    }
+  </script>  <h1>Chat Section</h1>
+  <p>Logged in as: <strong><span id="chatUser"></span></strong></p>  <script>
+    document.getElementById("chatUser").textContent = user;
+  </script></body>
 </html>
