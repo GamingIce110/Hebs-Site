@@ -1,18 +1,56 @@
-<!-- Full HEBS Website: Phase 1 Setup --><!-- index.html --><!DOCTYPE html><html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HEBS Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>HEBS Dashboard</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="login-container">
-    <h1 class="glitch" data-text="HEBS SYSTEM">HEBS SYSTEM</h1>
-    <input type="password" id="passwordInput" placeholder="Enter Password" />
-    <button onclick="login()">Enter</button>
-  </div><audio id="startupSound" src="sounds/startup.mp3" autoplay></audio>
-   <button onclick="window.location.href='chat.html'">💬 HEBS Chat</button>
+    <h1 class="glitch">HEBS DASHBOARD</h1>
+    <p id="memberName"></p>
+    <p id="memberRole"></p>
+    <div id="missionBoard">
+      <h3>🔐 Secret Missions</h3>
+      <ul id="missions"></ul>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </div>
+  <script>
+    const roles = {
+      "Shayan": "Leader / Copy Holder",
+      "Qaim": "Hacker / Editor",
+      "Hasan": "Mission Executer / Faltu Banda",
+      "Hadi": "Fighter",
+      "Ayan": "Secret Member / Spy"
+    };const missions = {
+  "Shayan": ["Control class chaos", "Hold backup copy of HEBS docs"],
+  "Qaim": ["Manage tech stuff", "Edit secret files"],
+  "Hasan": ["Carry out basic missions", "Distract teachers if needed"],
+  "Hadi": ["Protect members", "Act strong in fights"],
+  "Ayan": ["Gather info secretly", "Stay hidden"]
+};
 
-  <script src="firebase.js"></script>  <script src="script.js"></script></body>
+const user = localStorage.getItem("hebsMember");
+if (!user) {
+  window.location.href = "index.html";
+} else {
+  document.getElementById("memberName").innerText = `👤 Name: ${user}`;
+  document.getElementById("memberRole").innerText = `🛠️ Role: ${roles[user]}`;
+
+  const missionList = document.getElementById("missions");
+  missions[user].forEach(m => {
+    const li = document.createElement("li");
+    li.innerText = m;
+    missionList.appendChild(li);
+  });
+}
+
+function logout() {
+  localStorage.removeItem("hebsMember");
+  window.location.href = "index.html";
+}
+
+  </script>
+</body>
 </html>
