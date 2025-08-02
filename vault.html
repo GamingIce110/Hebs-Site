@@ -70,6 +70,12 @@
   </script>
 </head>
 <body style="background-color:black; color:lime; font-family:monospace;">
+  <script>
+    if (!localStorage.getItem("hebs_user")) {
+      alert("You are not logged in. Redirecting...");
+      window.location.href = "index.html";
+  }
+  </script>
   <h2>📂 HEBS File Vault</h2>
   <input type="file" id="fileInput">
   <button id="uploadBtn">Upload</button>
