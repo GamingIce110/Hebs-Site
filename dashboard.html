@@ -1,31 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- dashboard.html --><!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HEBS Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="dashboard-container">
-    <h1 class="glitch" data-text="HEBS DASHBOARD">HEBS DASHBOARD</h1>
-    
-    <div class="button-grid">
-      <button onclick="openChat()">🗨️ Chat</button>
-      <button onclick="openMissions()">📌 Missions</button>
-      <button onclick="openVault()">🔐 Vault</button>
-      <button onclick="openTerminal()">💻 Terminal</button>
-    </div>
-    
-    <div class="member-info">
-      <p><strong>Access Level:</strong> Hacker (Qaim)</p>
-      <p><strong>Status:</strong> Connected to HEBS Mainframe</p>
-    </div>
-  </div>
-
-  <audio id="startupSound" src="sounds/startup.mp3" autoplay></audio>
-
-  <script src="dashboard.js"></script>
-</body>
+  <script>
+    const user = localStorage.getItem("hebs_user");
+    if (!user) {
+      alert("You are not logged in. Redirecting...");
+      window.location.href = "index.html";
+    }
+  </script>  <h1>Welcome to HEBS Dashboard</h1>
+  <p id="userGreeting"></p>  <nav>
+    <button onclick="location.href='chat.html'">Chat</button>
+    <button onclick="location.href='missions.html'">Missions</button>
+    <button onclick="location.href='vault.html'">Vault</button>
+  </nav>  <script>
+    document.getElementById("userGreeting").textContent = `Hello, ${user}`;
+  </script></body>
 </html>
