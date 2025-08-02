@@ -1,0 +1,82 @@
+<!-- terminal.html --><!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HEBS Terminal</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 20px;
+    }
+    #terminal {
+      border: 1px solid #00ff00;
+      padding: 20px;
+      height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    #input-line {
+      display: flex;
+      margin-top: 10px;
+    }
+    #command-input {
+      background: black;
+      color: #00ff00;
+      border: none;
+      font-family: monospace;
+      width: 100%;
+      font-size: 16px;
+    }
+    #command-input:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>HEBS TERMINAL</h2>
+  <div id="terminal"></div>
+  <div id="input-line">
+    <span>&gt;</span>
+    <input type="text" id="command-input" placeholder="Enter command...">
+  </div><audio id="typeSound" src="sounds/type.mp3"></audio>
+
+  <script>
+    const terminal = document.getElementById('terminal');
+    const input = document.getElementById('command-input');
+    const typeSound = document.getElementById('typeSound');
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const command = input.value;
+        terminal.innerHTML += `\n> ${command}`;
+        respond(command);
+        input.value = '';
+      } else {
+        typeSound.currentTime = 0;
+        typeSound.play();
+      }
+    });
+
+    function respond(command) {
+      switch(command.toLowerCase()) {
+        case 'help':
+          terminal.innerHTML += '\nCommands: help, about, members, clear';
+          break;
+        case 'about':
+          terminal.innerHTML += '\nHEBS Secret Terminal v1.0\nBuilt by Hacker427';
+          break;
+        case 'members':
+          terminal.innerHTML += '\nShayan (Leader)\nQaim (Hacker)\nHasan (Mission Man)\nHadi (Fighter)\nAyan (Spy)';
+          break;
+        case 'clear':
+          terminal.innerHTML = '';
+          break;
+        default:
+          terminal.innerHTML += '\nUnknown command: ' + command;
+      }
+
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+  </script></body>
+</html>
