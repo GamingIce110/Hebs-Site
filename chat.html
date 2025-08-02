@@ -25,6 +25,12 @@
 
 </head>
 <body>
+  <script>
+  if (!localStorage.getItem("hebs_user")) {
+    alert("You are not logged in. Redirecting...");
+    window.location.href = "index.html";
+  }
+  </script>
   <div class="login-container">
     <h1 class="glitch">HEBS CHAT</h1>
     <div id="chat-box" class="chat-box"></div>
