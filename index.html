@@ -19,6 +19,33 @@
   <audio id="startupSound" src="sounds/startup.mp3" autoplay></audio>
 
   <script src="firebase.js"></script>
+
+  <!-- Inline login logic -->
+  <script>
+    const members = {
+      "Leader541": "dashboard.html?user=Shayan",
+      "Hacker427": "dashboard.html?user=Qaim",
+      "exe829": "dashboard.html?user=Hasan",
+      "fighter,7648": "dashboard.html?user=Hadi",
+      "spy784": "dashboard.html?user=Ayan"
+    };
+
+    function login() {
+      const password = document.getElementById("passwordInput").value.trim();
+      if (members[password]) {
+        window.location.href = members[password];
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Wrong Password',
+          text: 'Access Denied!',
+          background: '#111',
+          color: '#fff'
+        });
+      }
+    }
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
